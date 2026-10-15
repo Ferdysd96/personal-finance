@@ -1,0 +1,60 @@
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Always dark premium theme */
+@import "@ionic/angular/css/palettes/dark.always.css";
+
+html, body, ion-app {
+  background: var(--fin-bg);
+  color: var(--fin-text);
+}
+
+body {
+  font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(16, 185, 129, 0.18), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(45, 212, 191, 0.12), transparent 50%),
+    var(--fin-bg);
+  min-height: 100%;
+}
+
+.fin-toolbar {
+  --background: transparent;
+  --border-width: 0;
+}
+
+.fin-content {
+  --background: transparent;
+}
+
+.glass {
+  background: var(--fin-surface);
+  border: 1px solid var(--fin-border);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+
+ion-searchbar {
+  --placeholder-color: var(--fin-muted);
+  --icon-color: var(--fin-accent);
+  --color: var(--fin-text);
+}
+
+ion-select, ion-input {
+  --color: var(--fin-text);
+  --placeholder-color: var(--fin-muted);
+}

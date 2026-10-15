@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-title>Movimientos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/ingreso-manual" color="success">+ Manual</ion-button>
+      <ion-button (click)="filtersOpen = !filtersOpen">
+        <ion-icon slot="icon-only" name="options-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar class="fin-toolbar search-bar">
+    <ion-searchbar
+      [(ngModel)]="search"
+      (ionInput)="apply()"
+      placeholder="Buscar descripción, banco…"
+      debounce="250"
+      animated
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="page-pad">
+    <div class="filters glass" *ngIf="filtersOpen">
+      <ion-item lines="none" class="filter-item">
+        <ion-select label="Mes" labelPlacement="stacked" interface="popover" [(ngModel)]="mes" (ionChange)="apply()">
+          <ion-select-option *ngFor="let m of meses" [value]="m">{{ mesLabel(m) }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none" class="filter-item">
+        <ion-select label="Tipo" labelPlacement="stacked" interface="popover" [(ngModel)]="tipo" (ionChange)="apply()">
+          <ion-select-option value="todos">Todos</ion-select-option>
+          <ion-select-option value="ingreso">Ingreso</ion-select-option>
+          <ion-select-option value="egreso">Egreso</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none" class="filter-item">
+        <ion-select label="Categoría" labelPlacement="stacked" interface="popover" [(ngModel)]="categoria" (ionChange)="apply()">
+          <ion-select-option value="todas">Todas</ion-select-option>
+          <ion-select-option *ngFor="let c of categorias" [value]="c">{{ c }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="block" fill="clear" size="small" (click)="clearFilters()">Limpiar filtros</ion-button>
+    </div>
+
+    <p class="count">{{ lista.length }} resultado{{ lista.length === 1 ? '' : 's' }}</p>
+
+    <div class="glass list-card">
+      <button type="button" class="mov-row" *ngFor="let m of lista" (click)="openDetalle(m.id)">
+        <div class="mov-icon" [class.ing]="m.tipo === 'ingreso'" [class.egr]="m.tipo === 'egreso'">
+          <ion-icon [name]="m.tipo === 'ingreso' ? 'arrow-down-outline' : 'arrow-up-outline'"></ion-icon>
+        </div>
+        <div class="mov-meta">
+          <strong>{{ m.descripcion }}</strong>
+          <span>{{ m.categoria }} · {{ m.fecha }} · {{ m.banco }}</span>
+        </div>
+        <div class="mov-amt" [class.pos]="m.tipo === 'ingreso'" [class.neg]="m.tipo === 'egreso'">
+          {{ m.tipo === 'ingreso' ? '+' : '−' }}{{ m.monto | monedaCl:m.moneda }}
+        </div>
+      </button>
+      <p class="empty" *ngIf="!lista.length">No hay movimientos con estos filtros.</p>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button routerLink="/ingreso-manual" color="success" aria-label="Nuevo movimiento manual">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

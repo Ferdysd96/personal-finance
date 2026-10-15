@@ -1,0 +1,44 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-title>Categorías</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <div class="page-pad">
+    <ion-item class="glass month-select" lines="none">
+      <ion-select label="Mes" labelPlacement="stacked" interface="popover" [(ngModel)]="mes" (ionChange)="refresh()">
+        <ion-select-option *ngFor="let m of meses" [value]="m">{{ mesLabel(m) }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <section class="glass chart-wrap">
+      <div class="chart-box">
+        <canvas #pieCanvas></canvas>
+        <div class="chart-center">
+          <span>Egresos</span>
+          <strong>{{ total | monedaCl }}</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="glass list-card" *ngIf="cats.length; else empty">
+      <button
+        type="button"
+        class="cat-row"
+        *ngFor="let c of cats; let i = index"
+        (click)="openDetalle(c.categoria)"
+      >
+        <span class="dot" [style.background]="color(i)"></span>
+        <div class="meta">
+          <strong>{{ c.categoria }}</strong>
+          <span>{{ c.cantidad }} movimientos · {{ c.porcentaje | number:'1.0-0' }}%</span>
+        </div>
+        <div class="amt neg">{{ c.total | monedaCl }}</div>
+      </button>
+    </section>
+    <ng-template #empty>
+      <p class="empty">Sin egresos en este mes.</p>
+    </ng-template>
+  </div>
+</ion-content>

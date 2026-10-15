@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/categorias" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ nombre || 'Categoría' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <div class="page-pad">
+    <ion-item class="glass month-select" lines="none">
+      <ion-select
+        label="Mes"
+        labelPlacement="stacked"
+        interface="popover"
+        [(ngModel)]="mes"
+        (ionChange)="refresh()"
+      >
+        <ion-select-option *ngFor="let m of meses" [value]="m">{{ mesLabel(m) }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <section class="hero glass">
+      <p class="eyebrow">Egresos · {{ mesLabel(mes) }}</p>
+      <h1 class="neg">{{ total | monedaCl }}</h1>
+      <p class="count">{{ cantidad }} movimiento{{ cantidad === 1 ? '' : 's' }}</p>
+    </section>
+
+    <section class="glass list-card" *ngIf="lista.length; else empty">
+      <button
+        type="button"
+        class="mov-row"
+        *ngFor="let m of lista"
+        (click)="openDetalle(m.id)"
+      >
+        <div class="mov-meta">
+          <strong>{{ m.descripcion }}</strong>
+          <span>{{ m.fecha }} · {{ m.moneda }}</span>
+        </div>
+        <div class="mov-amt neg">−{{ m.monto | monedaCl:m.moneda }}</div>
+      </button>
+    </section>
+    <ng-template #empty>
+      <p class="empty">Sin egresos en esta categoría para el mes.</p>
+    </ng-template>
+  </div>
+</ion-content>

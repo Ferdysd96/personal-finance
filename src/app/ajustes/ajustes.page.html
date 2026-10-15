@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-title>Ajustes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <div class="page-pad">
+    <section class="glass block">
+      <h2>Google Sheet</h2>
+      <p class="hint">
+        Deja <code>REPLACE_ME</code> para usar datos mock offline.
+        Para producción, pega el ID del spreadsheet y configura una API Key en
+        <code>src/assets/config.json</code> (no subas secretos al repo).
+      </p>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="spreadsheetId"
+          labelPlacement="stacked"
+          [(ngModel)]="spreadsheetId"
+          placeholder="REPLACE_ME"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="Nombre de pestaña"
+          labelPlacement="stacked"
+          [(ngModel)]="sheetName"
+          placeholder="Movimientos"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" class="accent-btn" (click)="guardar()" [disabled]="loading">
+        Guardar configuración
+      </ion-button>
+    </section>
+
+    <section class="glass block">
+      <h2>Sincronización</h2>
+      <div class="row"><span>Última sync</span><strong>{{ lastSyncLabel() }}</strong></div>
+      <div class="row"><span>Fuente de datos</span><strong>{{ usingMock ? 'Mock local' : 'Google Sheets' }}</strong></div>
+      <div class="row" *ngIf="error"><span>Error</span><strong class="neg">{{ error }}</strong></div>
+      <ion-button expand="block" fill="outline" (click)="refrescar()" [disabled]="loading">
+        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+        Actualizar ahora
+      </ion-button>
+    </section>
+
+    <section class="glass block about">
+      <h2>Acerca de</h2>
+      <p><strong>Finanzas</strong> — app Ionic Angular para visualizar movimientos bancarios sincronizados desde un Google Sheet (contrato del bot de finanzas).</p>
+      <p class="muted">MVP offline con mock · Sheets API v4 lista en SheetsService · Capacitor habilitado</p>
+      <p class="muted">v0.1.0</p>
+    </section>
+  </div>
+</ion-content>

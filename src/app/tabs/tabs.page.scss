@@ -1,0 +1,12 @@
+.fin-tab-bar {
+  --background: var(--fin-surface);
+  --border: 1px solid var(--fin-border);
+  backdrop-filter: blur(16px);
+  padding-bottom: env(safe-area-inset-bottom);
+
+  ion-tab-button {
+    --color: var(--fin-muted);
+    --color-selected: var(--fin-accent);
+    font-weight: 600;
+  }
+}

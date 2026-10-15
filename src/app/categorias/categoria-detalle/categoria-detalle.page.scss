@@ -1,0 +1,23 @@
+﻿.page-pad { padding: 8px 16px 28px; }
+.month-select { --background: transparent; margin-bottom: 14px; border-radius: 16px; }
+.hero {
+  padding: 22px 20px; margin-bottom: 14px; text-align: center;
+  background: linear-gradient(160deg, rgba(248,113,113,0.16), rgba(15,23,42,0.7));
+  border-color: rgba(248,113,113,0.28);
+}
+.eyebrow { margin: 0; color: var(--fin-muted); font-size: 0.8rem; text-transform: capitalize; }
+.hero h1 { margin: 8px 0 6px; font-size: 1.9rem; font-weight: 800; }
+.count { margin: 0; color: var(--fin-muted); font-size: 0.85rem; }
+.list-card { overflow: hidden; }
+.mov-row {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; background: transparent; border: 0;
+  border-bottom: 1px solid var(--fin-border); color: inherit; text-align: left; cursor: pointer;
+}
+.mov-row:last-child { border-bottom: none; }
+.mov-meta { flex: 1; min-width: 0; }
+.mov-meta strong { display: block; font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mov-meta span { color: var(--fin-muted); font-size: 0.75rem; }
+.mov-amt { font-weight: 700; white-space: nowrap; }
+.empty { text-align: center; color: var(--fin-muted); padding: 24px; }
+.neg { color: #f87171 !important; }

@@ -1,0 +1,77 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/movimientos" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <div class="page-pad" *ngIf="mov as m">
+    <section class="hero glass" [class.ing]="m.tipo === 'ingreso'" [class.egr]="m.tipo === 'egreso'">
+      <p class="tipo">{{ m.tipo === 'ingreso' ? 'Ingreso' : 'Egreso' }}</p>
+      <h1 [class.pos]="m.tipo === 'ingreso'" [class.neg]="m.tipo === 'egreso'">
+        {{ m.tipo === 'ingreso' ? '+' : '-' }}{{ m.monto | monedaCl:m.moneda }}
+      </h1>
+      <p class="desc">{{ m.descripcion }}</p>
+      <div class="badges" *ngIf="m.noSumarBalance || m.excluirDeCategorias">
+        <ion-badge *ngIf="m.noSumarBalance" color="medium">No suma al total</ion-badge>
+        <ion-badge *ngIf="m.excluirDeCategorias" color="warning">Fuera de categorías</ion-badge>
+      </div>
+    </section>
+
+    <section class="glass details">
+      <div class="row"><span>Fecha</span><strong>{{ m.fecha }}</strong></div>
+      <div class="row"><span>Categoría</span><strong>{{ m.categoria }}</strong></div>
+      <div class="row"><span>Moneda</span><strong>{{ m.moneda }}</strong></div>
+      <div class="row"><span>Banco</span><strong>{{ m.banco || '-' }}</strong></div>
+      <div class="row"><span>Cuenta</span><strong>{{ m.cuenta || '-' }}</strong></div>
+      <div class="row"><span>Fuente</span><strong>{{ m.fuente }}</strong></div>
+      <div class="row"><span>ID</span><strong class="mono">{{ m.id }}</strong></div>
+    </section>
+
+    <section class="glass flags" *ngIf="m.tipo === 'egreso'">
+      <p class="flags-hint" *ngIf="pareceRetiro">
+        Parece un retiro de efectivo: cuenta en el balance del banco, pero no en el desglose por categoría
+        (para que puedas anotar en qué usaste el efectivo sin duplicar).
+      </p>
+      <ion-item lines="none" class="flag-item">
+        <ion-toggle
+          [checked]="!!m.excluirDeCategorias"
+          (ionChange)="toggleExcluirCategorias($event)"
+        >
+          No contar en categorías (retiro / transferencia de efectivo)
+        </ion-toggle>
+      </ion-item>
+      <ion-item lines="none" class="flag-item">
+        <ion-toggle
+          [checked]="!!m.noSumarBalance"
+          (ionChange)="toggleNoSumarBalance($event)"
+        >
+          No sumar al total / balance (ya salió en un retiro)
+        </ion-toggle>
+      </ion-item>
+    </section>
+
+    <ion-button
+      *ngIf="isManual"
+      expand="block"
+      color="danger"
+      fill="outline"
+      class="delete-btn"
+      [disabled]="deleting"
+      (click)="confirmarEliminar()"
+    >
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
+      Eliminar movimiento manual
+    </ion-button>
+  </div>
+
+  <div class="page-pad" *ngIf="!mov">
+    <div class="glass empty-card">
+      <h2>Movimiento no encontrado</h2>
+      <ion-button expand="block" (click)="back()">Volver a movimientos</ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,114 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/movimientos" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ titulo }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <div class="page-pad">
+    <p class="hint">
+      Los movimientos manuales se guardan en este dispositivo y se combinan con Google Sheets.
+      Retiros de efectivo del banco no cuentan en categorías; si gastas ese efectivo, marca “pagado con efectivo” para no duplicar el total.
+    </p>
+
+    <section class="glass form-card">
+      <ion-item lines="none" class="field">
+        <ion-select
+          label="Tipo"
+          labelPlacement="stacked"
+          interface="popover"
+          [(ngModel)]="tipo"
+          (ionChange)="onTipoChange()"
+        >
+          <ion-select-option value="ingreso">Ingreso</ion-select-option>
+          <ion-select-option value="egreso">Egreso</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="Fecha"
+          labelPlacement="stacked"
+          type="date"
+          [(ngModel)]="fecha"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="Monto"
+          labelPlacement="stacked"
+          type="number"
+          inputmode="decimal"
+          min="0"
+          [(ngModel)]="monto"
+          placeholder="0.00"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-select
+          label="Moneda"
+          labelPlacement="stacked"
+          interface="popover"
+          [(ngModel)]="moneda"
+        >
+          <ion-select-option value="DOP">DOP</ion-select-option>
+          <ion-select-option value="USD">USD</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="Categoría"
+          labelPlacement="stacked"
+          [(ngModel)]="categoria"
+          [placeholder]="tipo === 'egreso' ? 'compra / comida / transporte' : 'salario / ingreso'"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="Descripción"
+          labelPlacement="stacked"
+          [(ngModel)]="descripcion"
+          [placeholder]="tipo === 'egreso' ? 'Ej. Supermercado' : 'Ej. Nómina quincena'"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="field" *ngIf="tipo === 'egreso'">
+        <ion-checkbox
+          labelPlacement="end"
+          justify="start"
+          [(ngModel)]="pagadoConEfectivo"
+        >
+          Pagado con efectivo (ya salió en un retiro; no sumar otra vez al total)
+        </ion-checkbox>
+      </ion-item>
+
+      <ion-item lines="none" class="field">
+        <ion-input
+          label="Cuenta (opcional)"
+          labelPlacement="stacked"
+          [(ngModel)]="cuenta"
+          placeholder="Ej. BHD 1234"
+        ></ion-input>
+      </ion-item>
+    </section>
+
+    <ion-button
+      expand="block"
+      class="save-btn"
+      [class.egreso]="tipo === 'egreso'"
+      [disabled]="!canSave || saving"
+      (click)="guardar()"
+    >
+      Guardar {{ tipo === 'egreso' ? 'egreso' : 'ingreso' }}
+    </ion-button>
+    <ion-button expand="block" fill="clear" (click)="cancelar()">Cancelar</ion-button>
+  </div>
+</ion-content>

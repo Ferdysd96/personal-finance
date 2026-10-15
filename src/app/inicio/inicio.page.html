@@ -1,0 +1,112 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="fin-toolbar">
+    <ion-title>
+      <div class="brand">
+        <span class="brand-mark">◆</span>
+        <span>Finanzas</span>
+      </div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-badge *ngIf="usingMock" color="warning" class="mock-badge">Mock</ion-badge>
+      <ion-button routerLink="/ingreso-manual" color="success">
+        + Manual
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fin-content">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="page-pad">
+    <p class="eyebrow">Resumen de {{ mesLabel() }}</p>
+
+    <section class="hero-card glass">
+      <p class="hero-label">Balance del mes</p>
+      <h1 [class.pos]="resumen.balance >= 0" [class.neg]="resumen.balance < 0">
+        {{ resumen.balance | monedaCl }}
+      </h1>
+      <div class="hero-grid">
+        <div>
+          <span class="mini-label">Ingresos</span>
+          <strong class="pos">{{ resumen.ingresos | monedaCl }}</strong>
+        </div>
+        <div>
+          <span class="mini-label">Egresos</span>
+          <strong class="neg">{{ resumen.egresos | monedaCl }}</strong>
+        </div>
+        <div>
+          <span class="mini-label">Movimientos</span>
+          <strong>{{ resumen.cantidad }}</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Últimos 7 días</h2>
+      </div>
+      <div class="glass chart-card">
+        <canvas #chartCanvas height="180"></canvas>
+      </div>
+    </section>
+
+    <section class="block" *ngIf="topCats.length">
+      <div class="block-head">
+        <h2>Top categorías</h2>
+      </div>
+      <div class="glass list-card">
+        <button
+          type="button"
+          class="cat-row"
+          *ngFor="let c of topCats"
+          (click)="openCategoriaDetalle(c.categoria)"
+        >
+          <div class="cat-meta">
+            <strong>{{ c.categoria }}</strong>
+            <span>{{ c.cantidad }} mov. · {{ c.porcentaje | number:'1.0-0' }}%</span>
+          </div>
+          <div class="cat-bar-wrap">
+            <div class="cat-bar" [style.width.%]="c.porcentaje"></div>
+          </div>
+          <div class="cat-amt neg">{{ c.total | monedaCl }}</div>
+        </button>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <h2>Recientes</h2>
+        <a routerLink="/tabs/movimientos">Ver todos</a>
+      </div>
+      <div class="glass list-card">
+        <button
+          type="button"
+          class="mov-row"
+          *ngFor="let m of recientes"
+          (click)="openDetalle(m.id)"
+        >
+          <div class="mov-icon" [class.ing]="m.tipo === 'ingreso'" [class.egr]="m.tipo === 'egreso'">
+            <ion-icon [name]="m.tipo === 'ingreso' ? 'arrow-down-outline' : 'arrow-up-outline'"></ion-icon>
+          </div>
+          <div class="mov-meta">
+            <strong>{{ m.descripcion }}</strong>
+            <span>{{ m.categoria }} · {{ m.fecha }}</span>
+          </div>
+          <div class="mov-amt" [class.pos]="m.tipo === 'ingreso'" [class.neg]="m.tipo === 'egreso'">
+            {{ m.tipo === 'ingreso' ? '+' : '−' }}{{ m.monto | monedaCl }}
+          </div>
+        </button>
+        <p class="empty" *ngIf="!recientes.length">Sin movimientos este mes.</p>
+      </div>
+    </section>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button routerLink="/ingreso-manual" color="success" aria-label="Nuevo movimiento manual">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

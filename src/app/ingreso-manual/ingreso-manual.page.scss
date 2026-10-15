@@ -1,0 +1,25 @@
+﻿.page-pad { padding: 12px 16px 36px; }
+.hint {
+  margin: 0 0 14px;
+  color: var(--fin-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+.form-card { padding: 6px 4px 10px; margin-bottom: 16px; overflow: hidden; }
+.field {
+  --background: transparent;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  margin-bottom: 4px;
+}
+.save-btn {
+  --background: #10b981;
+  --background-activated: #059669;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.save-btn.egreso {
+  --background: #ef4444;
+  --background-activated: #dc2626;
+}

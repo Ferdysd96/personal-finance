@@ -1,0 +1,27 @@
+.page-pad { padding: 12px 16px 28px; }
+.hero {
+  padding: 24px 20px; margin-bottom: 14px; text-align: center;
+  &.ing { background: linear-gradient(160deg, rgba(16,185,129,0.2), rgba(15,23,42,0.7)); border-color: rgba(52,211,153,0.3); }
+  &.egr { background: linear-gradient(160deg, rgba(248,113,113,0.18), rgba(15,23,42,0.7)); border-color: rgba(248,113,113,0.28); }
+  .tipo { margin: 0; text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem; color: var(--fin-muted); font-weight: 700; }
+  h1 { margin: 8px 0 10px; font-size: 2.1rem; font-weight: 800; }
+  .desc { margin: 0; color: var(--fin-text); opacity: 0.9; }
+}
+.details { padding: 8px 4px; margin-bottom: 16px; }
+.row {
+  display: flex; justify-content: space-between; gap: 16px;
+  padding: 14px 16px; border-bottom: 1px solid var(--fin-border);
+  span { color: var(--fin-muted); font-size: 0.85rem; }
+  strong { text-align: right; font-size: 0.9rem; font-weight: 600; word-break: break-word; }
+}
+.row:last-child { border-bottom: none; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem !important; }
+.empty-card { padding: 28px 20px; text-align: center; }
+.delete-btn { margin-top: 4px; font-weight: 700; }
+.pos { color: #34d399 !important; }
+.neg { color: #f87171 !important; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.flags { padding: 10px 8px 14px; margin-top: 14px; }
+.flags-hint { margin: 4px 8px 12px; color: var(--fin-muted); font-size: 0.82rem; line-height: 1.4; }
+.flag-item { --background: transparent; --padding-start: 8px; --inner-padding-end: 8px; margin-bottom: 4px; }
+.delete-btn { margin-top: 16px; }

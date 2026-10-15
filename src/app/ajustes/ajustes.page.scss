@@ -1,0 +1,18 @@
+.page-pad { padding: 8px 16px 28px; }
+.block { padding: 16px; margin-bottom: 14px; }
+.block h2 { margin: 0 0 8px; font-size: 1.05rem; }
+.hint { color: var(--fin-muted); font-size: 0.82rem; line-height: 1.45; margin: 0 0 12px; }
+.hint code {
+  background: rgba(52, 211, 153, 0.12); color: #6ee7b7; padding: 1px 6px; border-radius: 6px; font-size: 0.78rem;
+}
+.field { --background: var(--fin-surface-2); border-radius: 12px; margin-bottom: 10px; }
+.accent-btn { --background: linear-gradient(135deg, #059669, #10b981); --border-radius: 12px; font-weight: 700; margin-top: 6px; }
+.row {
+  display: flex; justify-content: space-between; gap: 12px; padding: 10px 0;
+  border-bottom: 1px solid var(--fin-border); margin-bottom: 4px;
+  span { color: var(--fin-muted); font-size: 0.85rem; }
+  strong { text-align: right; font-size: 0.88rem; }
+}
+.about p { margin: 0 0 10px; line-height: 1.45; font-size: 0.9rem; }
+.muted { color: var(--fin-muted) !important; font-size: 0.8rem !important; }
+.neg { color: #f87171; }
